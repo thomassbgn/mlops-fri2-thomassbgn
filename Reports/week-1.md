@@ -178,15 +178,12 @@ I used ChatGPT for implementation guidance, interpreting the test failure, and d
 
 This lab showed why an MLOps baseline needs more than a model that trains: input contracts, deterministic chronological splits, explicit evaluation boundaries, and reproducible test evidence all matter. In particular, I learned to keep the future test period untouched, compare models on identical validation rows, and create a deliberate invalid fixture paired with a valid control. The test failure also showed that automated checks can enforce both functional behavior and error-message contracts.
 
-## Remaining actions
 
-- [ ] Insert measured validation MAEs from the local run.
-- [ ] Add the final test count or screenshot if requested.
-- [ ] Add branch, commit, and PR references after opening the PR.
-- [ ] Record reviewer comments and how I responded.
 
 
 Annex :
+My PR in the team Github :
+![PR](image.png)
 Validation of the global test after all the modification :
 ![global_test](image-2.png)
 Add of the two test exercise : 

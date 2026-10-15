@@ -184,7 +184,11 @@ This lab showed why an MLOps baseline needs more than a model that trains: input
 Annex :
 My PR in the team Github :
 ![PR](image.png)
+
+
 Validation of the global test after all the modification :
 ![global_test](image-2.png)
+
+
 Add of the two test exercise : 
 ![test_exercise](image-1.png)

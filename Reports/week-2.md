@@ -1,5 +1,7 @@
 # Week 2, Labs 3–4: dependency lock, Docker, clean rerun, tested prediction API
 
+> Update, 2026-11-08 (after the Week 2 deadline). The version submitted on time is commit `e213d7c` (2026-10-22). This update only completes facts that were marked TODO: the two PR links and their outcome, the review I received, and the missing screenshots. No result or run was added.
+
 ## Student / team
 
 - Student: Thomas Soubagne (GitHub `thomassbgn`), session fri2
@@ -25,13 +27,13 @@
   - [`README.md`, section "Lab 3 – Reproducible Docker Environment"](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/blob/30d5c3e708459cd4fb5ccb56acaba83d91e9be63/README.md)
   - [`reports/lab-03.md`](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/blob/30d5c3e708459cd4fb5ccb56acaba83d91e9be63/reports/lab-03.md) (execution record)
   - [`reports/lab3-evidence/`](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/tree/30d5c3e708459cd4fb5ccb56acaba83d91e9be63/reports/lab3-evidence) (raw logs `00` to `08`)
-- My Lab 3 PR: **TODO: PR link + merge commit SHA**
+- My Lab 3 PR: [PR #9](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/pull/9), head `30d5c3e`. It was not merged. Nobody reviewed it. Victor closed it on 2026-11-06, when Axel's [PR #12](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/pull/12) was merged as `73d6c47`. PR #12 is a separate Lab 3 implementation that started from a newer `main`. It is not based on my branch, but it makes the same main fixes: run `.venv/bin/python` instead of `uv run`, `UV_PYTHON_DOWNLOADS=never`, a build-only uv cache, and targeted `COPY`. My branch and its evidence are still on GitHub at `30d5c3e`.
 
 ### Lab 4
 
 - Schema by Victor Rouleau: [PR #8](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/pull/8), merged into `main` as `5ba2a82`.
 - My branch: [`feature/lab4-api-service`](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/tree/feature/lab4-api-service), created from `main` at `5ba2a82`. One file changed: [`src/bike_demand/api.py`](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/blob/feature/lab4-api-service/src/bike_demand/api.py).
-- My Lab 4 PR, "feat(lab4): implement model loading and prediction endpoints": **TODO: PR link + commit SHA**
+- My Lab 4 PR: [PR #10](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/pull/10), "feat(lab4): implement model loading and prediction endpoints", head `ce99b4f`. Nils approved it and merged it into `main` as `cbfa27e` on 2026-10-22.
 
 ## Test and execution results (commands, revision, observed output)
 
@@ -116,37 +118,17 @@ Repository checks on the branch: the 49 existing tests passed, `ruff check` and 
 
 ## Screenshots
 
-### Lab 3
+**Missing.** The first version of this report embedded seven images from
+`images/` (Docker build, offline run, pytest in the image, stale-lock error,
+`/health` 200, `/predict` 200/422, `/health` 503). These files were never
+committed: `Reports/images/` is empty, so the links were broken. I removed the
+broken links rather than add screenshots taken later, which would show
+different runs.
 
-![Successful docker build of bike-demand:lab3 with its image ID](images/week-2-docker-build.png)
+The same evidence exists as text:
 
-`docker build --no-cache` of `bike-demand:lab3` succeeding, image `sha256:af0942bc3c4c…`, branch `feature/lab3-docker-reproducibility` (`30d5c3e`).
-
-![Offline training run in the container showing the validation MAE](images/week-2-docker-run-offline.png)
-
-`docker run --rm --network none bike-demand:lab3`: validation MAE 86.84685685591091 (random forest) and 154.23179306864967 (naive), image `sha256:af0942bc3c4c…`.
-
-![pytest inside the image: 49 passed](images/week-2-docker-pytest.png)
-
-`docker run --rm --network none bike-demand:lab3 pytest -q`: 49 passed, 1 warning, image `sha256:af0942bc3c4c…`.
-
-![uv sync --locked failing on a stale lock](images/week-2-stale-lock-error.png)
-
-Negative test on a temporary copy of `022c3c4` with `tabulate` added to `pyproject.toml` only: `uv sync --locked` refuses the stale `uv.lock` and exits with code 1.
-
-### Lab 4
-
-![uvicorn started and GET /health returning 200](images/week-2-api-health.png)
-
-uvicorn server started with my local Lab 2 model, and `GET /health` returning 200 with `model_version` `baseline-25899e0b2e61`, branch `feature/lab4-api-service`.
-
-![POST /predict: valid request 200 and invalid request 422](images/week-2-api-predict.png)
-
-`POST /predict` with a valid request (200, prediction `146.59529728935132`) and an invalid request (422), branch `feature/lab4-api-service`.
-
-![GET /health returning 503 when the artifact is missing](images/week-2-api-health-503.png)
-
-`GET /health` returning 503 with the reason when the model artifact is missing, branch `feature/lab4-api-service`.
+- Lab 3: the raw logs `00` to `08` in [`reports/lab3-evidence/`](https://github.com/BaptVic78/mlops-fri2-vant-bike-demand/tree/30d5c3e708459cd4fb5ccb56acaba83d91e9be63/reports/lab3-evidence) at commit `30d5c3e`. They contain the build, the offline run, pytest in the image and the stale-lock error.
+- Lab 4: the observed results in the table above, and Nils's independent local verification in his review of PR #10 (quoted below).
 
 ## My contribution
 
@@ -238,28 +220,43 @@ uvicorn server started with my local Lab 2 model, and `GET /health` returning 20
 
 ### Lab 3
 
-TODO: reviewer comment and my response
+PR #9 received no review and no comment. It was closed without merge when
+Axel's PR #12 was merged (see Links). I did not ask for a review before the
+deadline. That is the main gap of my Lab 3 work.
 
 ### Lab 4
 
-TODO: reviewer comment and my response
+Nils Giraud approved PR #10 on commit `ce99b4f` (2026-10-22). He reran it
+locally: `uv sync --locked` succeeded, Ruff passed, 49 tests passed,
+`GET /health` returned 200 with the artifact `model_version`, a valid
+`POST /predict` returned 200, `hr=24` returned 422, and missing artifacts
+gave a 503. His two observations:
+
+- *"Declare FastAPI and Uvicorn as direct project dependencies rather than
+  relying on MLflow to install them transitively."* I did not change it in
+  my PR, because it changes `pyproject.toml` and `uv.lock` and I had left that
+  decision to the team. `uvicorn` was declared later by Axel in PR #13 (Lab 4
+  container work), after this week.
+- *"Please record the verification commands and results in the PR
+  description."* I did not do it: the PR #10 description still contains only
+  the template. The commands and results are recorded in this report.
 
 ## Blockers / missing evidence
 
 ### Lab 3
 
-- My Lab 3 PR link, review and merge commit SHA are still missing (see above).
+- My Lab 3 PR (#9) was never reviewed or merged. It was superseded by PR #12 (see Links).
 - Lab 3 was only verified locally. It was not verified in GitHub Actions; the CI workflow is unchanged and does not build the image.
 - Only linux/amd64 was tested. The base images and the Debian `git` package are not pinned by digest in the Dockerfile (the digests resolved at build time are recorded in `lab-03.md`).
 - The container runs as root, and outputs disappear with `--rm` unless copied out.
-- Screenshots are still to be added in `reports/images/`.
+- The screenshots were not committed (see Screenshots).
 
 ### Lab 4
 
-- `tests/test_api.py` is written by a teammate, so I cannot report its result yet.
-- The team has not yet decided whether to declare FastAPI, uvicorn and `httpx` explicitly.
+- `tests/test_api.py` was written by Nils in PR #11 (merged as `63bb4cd` on 2026-10-22). I did not run it myself for this report.
+- At the end of the week, FastAPI and uvicorn were still installed only through MLflow. `uvicorn` was declared later, in PR #13.
 - Artifact paths are computed from `__file__`, which assumes an editable install (the default with `uv sync`).
-- My Lab 4 PR link, commit SHA and review are still missing (see above).
+- The PR #10 description was not filled in with the verification, as the reviewer asked.
 - No CI run: all Lab 4 checks were local.
 
 ## Assistance and recovery acknowledgement
